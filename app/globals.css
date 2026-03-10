@@ -1,26 +1,254 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@source "../app/**/*.{ts,tsx}";
+@source "../components/**/*.{ts,tsx}";
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ==========================================
+   Natakarya Design System
+   Inspired by Dribbble: Budiarti R.
+   ========================================== */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* Color Palette */
+  --color-background: #F0F4F2;
+  --color-foreground: #1a2e35;
+
+  --color-card: #FFFFFF;
+  --color-card-foreground: #1a2e35;
+
+  --color-primary: #FFD166;
+  --color-primary-foreground: #1a2e35;
+
+  --color-secondary: #e8eeeb;
+  --color-secondary-foreground: #1a2e35;
+
+  --color-muted: #dfe6e2;
+  --color-muted-foreground: #6b7f7a;
+
+  --color-accent: #FFD166;
+  --color-accent-foreground: #1a2e35;
+
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
+
+  --color-border: #d4ddd8;
+  --color-input: #d4ddd8;
+  --color-ring: #FFD166;
+
+  /* Sidebar */
+  --color-sidebar: #1a2e35;
+  --color-sidebar-foreground: #ffffff;
+  --color-sidebar-accent: #FFD166;
+
+  /* Kanban Column Colors */
+  --color-column-todo: #FCE7E7;
+  --color-column-progress: #FDF2E2;
+  --color-column-review: #E6F7F9;
+  --color-column-done: #F3EDFC;
+
+  /* Priority Colors */
+  --color-priority-high: #ef4444;
+  --color-priority-medium: #f59e0b;
+  --color-priority-low: #22c55e;
+
+  /* Status */
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-info: #3b82f6;
+
+  /* Spacing & Sizing */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-dropdown: 0 10px 38px -10px rgba(22, 23, 24, 0.12), 0 10px 20px -15px rgba(22, 23, 24, 0.08);
+
+  /* Custom Animations */
+  --animate-gradient-shift: gradient-shift 15s ease infinite;
+  --animate-fade-in: fade-in 0.3s ease-out forwards;
+  --animate-pulse-dot: pulse-dot 2s ease-in-out infinite;
+
+  @keyframes gradient-shift {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pulse-dot {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.5;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+
+  /* Scrollbar styles */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-muted);
+    border-radius: var(--radius-full);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-muted-foreground);
+  }
+
+  /* Kanban horizontal scroll */
+  .kanban-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .kanban-scroll::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  /* Card drag animation */
+  .card-dragging {
+    transform: rotate(3deg);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Smooth transitions */
+  .transition-smooth {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Progress bar animation */
+  @keyframes progress-fill {
+    from {
+      width: 0;
+    }
+  }
+
+  .progress-animated {
+    animation: progress-fill 0.6s ease-out forwards;
+  }
+
+  /* Gradient backgrounds for login */
+  .gradient-animated {
+    background: linear-gradient(-45deg, #F0F4F2, #E6F7F9, #FDF2E2, #F3EDFC);
+    background-size: 400% 400%;
+    animation: var(--animate-gradient-shift);
+  }
+
+  /* Glassmorphism */
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  /* Column color utility classes */
+  .column-todo {
+    background-color: var(--color-column-todo);
+  }
+
+  .column-progress {
+    background-color: var(--color-column-progress);
+  }
+
+  .column-review {
+    background-color: var(--color-column-review);
+  }
+
+  .column-done {
+    background-color: var(--color-column-done);
+  }
+
+  /* Priority badge colors */
+  .priority-high {
+    background-color: #fde2e2;
+    color: var(--color-priority-high);
+  }
+
+  .priority-medium {
+    background-color: #fef3cd;
+    color: var(--color-priority-medium);
+  }
+
+  .priority-low {
+    background-color: #d4edda;
+    color: var(--color-priority-low);
+  }
+
+  .notification-pulse {
+    animation: var(--animate-pulse-dot);
+  }
+
+  .fade-in {
+    animation: var(--animate-fade-in);
+  }
+
+  /* Staggered fade in for lists */
+  .stagger-1 {
+    animation-delay: 0.05s;
+  }
+
+  .stagger-2 {
+    animation-delay: 0.1s;
+  }
+
+  .stagger-3 {
+    animation-delay: 0.15s;
+  }
+
+  .stagger-4 {
+    animation-delay: 0.2s;
+  }
 }
