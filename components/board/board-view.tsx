@@ -211,39 +211,39 @@ export function BoardView({ board: initialBoard }: BoardViewProps) {
 
   return (
     <div 
-      className="h-[calc(100vh-7rem)] -mx-4 -my-4 px-4 py-4 rounded-xl"
+      className="h-[calc(100vh-8rem)] lg:h-[calc(100vh-7rem)] -mx-4 -my-4 px-4 py-4 rounded-xl transition-all"
       style={{ background: board.background || "transparent" }}
     >
       {/* Project Header */}
-      <div className="mb-4">
-        <div className="flex items-center justify-between mb-3">
+      <div className="mb-6 lg:mb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
           <div>
-            <h1 className="text-xl font-bold">{board.title}</h1>
+            <h1 className="text-xl lg:text-2xl font-bold tracking-tight">{board.title}</h1>
             <div
-              className="flex items-center gap-2 text-sm mt-0.5"
+              className="flex items-center gap-2 text-sm mt-1"
               style={{ color: "var(--color-muted-foreground)" }}
             >
-              <span>{board.workspace.name}</span>
-              <span>·</span>
+              <span className="font-medium">{board.workspace.name}</span>
+              <span className="opacity-40">·</span>
               <span
-                className="py-0.5 px-2 rounded-full text-xs font-medium"
+                className="py-0.5 px-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider"
                 style={{
                   background: "#d4edda",
                   color: "var(--color-success)",
                 }}
               >
-                In Progress
+                Active
               </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2 lg:gap-3">
             {/* Team avatars */}
-            <div className="flex -space-x-2">
+            <div className="flex -space-x-2 mr-2">
               {membersToDisplay.slice(0, 4).map((m: any) => (
                 <div
                   key={m.id}
-                  className="w-8 h-8 rounded-full border-2 flex items-center justify-center text-xs font-semibold"
+                  className="w-8 h-8 rounded-full border-2 flex items-center justify-center text-xs font-semibold shadow-sm"
                   style={{
                     borderColor: "var(--color-background)",
                     background: "var(--color-muted)",
@@ -264,7 +264,7 @@ export function BoardView({ board: initialBoard }: BoardViewProps) {
               ))}
               {membersToDisplay.length > 4 && (
                 <div
-                  className="w-8 h-8 rounded-full border-2 flex items-center justify-center text-xs font-medium"
+                  className="w-8 h-8 rounded-full border-2 flex items-center justify-center text-xs font-bold shadow-sm"
                   style={{
                     borderColor: "var(--color-background)",
                     background: "var(--color-secondary)",
@@ -276,71 +276,63 @@ export function BoardView({ board: initialBoard }: BoardViewProps) {
               )}
             </div>
 
-            <button
-              onClick={handleFavorite}
-              className="p-2 rounded-xl transition-smooth hover:bg-[var(--color-secondary)] cursor-pointer"
-            >
-              <Star
-                size={16}
-                fill={isFavorite ? "var(--color-primary)" : "none"}
-                color={isFavorite ? "var(--color-primary)" : "var(--color-muted-foreground)"}
-              />
-            </button>
+            <div className="flex items-center gap-2">
+                <button
+                onClick={handleFavorite}
+                className="p-2 rounded-xl transition-smooth hover:bg-[var(--color-secondary)]/50 cursor-pointer border border-transparent hover:border-[var(--color-border)]"
+                >
+                <Star
+                    size={16}
+                    fill={isFavorite ? "var(--color-primary)" : "none"}
+                    color={isFavorite ? "var(--color-primary)" : "var(--color-muted-foreground)"}
+                />
+                </button>
 
-            <button 
-              onClick={() => {
-                navigator.clipboard.writeText(window.location.href);
-                toast.success("Board link copied to clipboard");
-              }}
-              className="flex items-center gap-1.5 py-2 px-3 rounded-xl text-sm transition-smooth hover:bg-[var(--color-secondary)] cursor-pointer"
-              style={{ color: "var(--color-muted-foreground)" }}>
-              <Share2 size={14} />
-              Share
-            </button>
+                <button 
+                onClick={() => {
+                    navigator.clipboard.writeText(window.location.href);
+                    toast.success("Board link copied to clipboard");
+                }}
+                className="flex items-center gap-1.5 py-2 px-3 rounded-xl text-xs font-bold transition-smooth hover:bg-[var(--color-secondary)]/50 cursor-pointer border border-transparent hover:border-[var(--color-border)]"
+                style={{ color: "var(--color-muted-foreground)" }}>
+                <Share2 size={14} />
+                <span className="hidden sm:inline">Share</span>
+                </button>
+            </div>
 
             {canManageBoard && (
-              <>
+              <div className="flex items-center gap-2">
                 <button 
                   onClick={() => setIsBoardSettingsModalOpen(true)}
-                  className="flex items-center gap-1.5 py-2 px-3 rounded-xl text-sm transition-smooth cursor-pointer"
+                  className="flex items-center gap-1.5 py-2 px-3 rounded-xl text-xs font-bold transition-smooth cursor-pointer border border-[var(--color-border)] hover:bg-[var(--color-secondary)]/50"
                   style={{ 
                     background: "var(--color-card)",
                     color: "var(--color-muted-foreground)",
                   }}>
                   <Settings size={14} />
-                  Settings
+                  <span className="hidden sm:inline">Settings</span>
                 </button>
 
-                {board.visibility === "PRIVATE" ? (
-                  <button 
-                    onClick={() => setIsBoardMembersModalOpen(true)}
-                    className="flex items-center gap-1.5 py-2 px-3 rounded-xl text-sm transition-smooth hover:bg-[var(--color-secondary)] cursor-pointer"
+                <button 
+                    onClick={() => board.visibility === "PRIVATE" ? setIsBoardMembersModalOpen(true) : router.push(`/dashboard/workspace/${board.workspace.id}/settings`)}
+                    className="flex items-center gap-1.5 py-2 px-3 rounded-xl text-xs font-bold transition-smooth hover:bg-[var(--color-secondary)]/50 cursor-pointer border border-transparent hover:border-[var(--color-border)]"
                     style={{ color: "var(--color-muted-foreground)" }}>
                     <Users size={14} />
-                    Manage Members
-                  </button>
-                ) : (
-                  <Link 
-                    href={`/dashboard/workspace/${board.workspace.id}/settings`}
-                    className="flex items-center gap-1.5 py-2 px-3 rounded-xl text-sm transition-smooth hover:bg-[var(--color-secondary)] cursor-pointer"
-                    style={{ color: "var(--color-muted-foreground)" }}>
-                    <Users size={14} />
-                    Invite People
-                  </Link>
-                )}
-              </>
+                    <span className="hidden sm:inline">{board.visibility === "PRIVATE" ? "Members" : "Invite"}</span>
+                </button>
+              </div>
             )}
           </div>
         </div>
 
-        {/* Sub tabs */}
-        <div className="flex items-center gap-1 mb-4">
+        {/* Sub tabs - Scrollable on mobile */}
+        <div className="flex items-center gap-1 mb-6 overflow-x-auto no-scrollbar pb-1">
           {["Overview", "List", "Board", "Calendar", "Documents", "Messages"].map(
             (tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className="py-1.5 px-4 rounded-full text-sm font-medium transition-smooth cursor-pointer"
+                className="py-1.5 px-4 rounded-full text-xs font-bold uppercase tracking-tight transition-smooth cursor-pointer whitespace-nowrap"
                 style={{
                   background:
                     tab === activeTab ? "var(--color-primary)" : "transparent",
@@ -358,10 +350,10 @@ export function BoardView({ board: initialBoard }: BoardViewProps) {
 
         {/* Board toolbar - Visible only for Board and List views */}
         {(activeTab === "Board" || activeTab === "List") && (
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
               <div
-                className="flex items-center gap-2 py-2 px-3 rounded-xl text-sm"
+                className="flex items-center gap-2 py-2 px-3 rounded-xl text-sm min-w-[160px]"
                 style={{
                   background: "var(--color-card)",
                   border: "1px solid var(--color-border)",
@@ -370,15 +362,15 @@ export function BoardView({ board: initialBoard }: BoardViewProps) {
                 <Search size={14} style={{ color: "var(--color-muted-foreground)" }} />
                 <input
                   type="text"
-                  placeholder="Search task"
+                  placeholder="Filter tasks..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="bg-transparent outline-none text-sm w-40"
+                  className="bg-transparent outline-none text-xs w-full"
                 />
               </div>
-              <button className="flex items-center gap-1.5 py-2 px-3 rounded-xl text-sm transition-smooth hover:bg-[var(--color-card)] cursor-pointer"
+              <button className="flex items-center gap-1.5 py-2 px-3 rounded-xl text-xs font-bold transition-smooth hover:bg-[var(--color-card)] cursor-pointer whitespace-nowrap"
                 style={{ color: "var(--color-muted-foreground)" }}>
-                Sort by
+                Sort
                 <ChevronDown size={14} />
               </button>
               <SearchFilter 
@@ -391,7 +383,7 @@ export function BoardView({ board: initialBoard }: BoardViewProps) {
                 <div className="relative">
                   <button
                     onClick={() => setShowLabelManager(!showLabelManager)}
-                    className="flex items-center gap-1.5 py-2 px-3 rounded-xl text-sm transition-smooth hover:bg-[var(--color-card)] cursor-pointer"
+                    className="flex items-center gap-1.5 py-2 px-3 rounded-xl text-xs font-bold transition-smooth hover:bg-[var(--color-card)] cursor-pointer whitespace-nowrap"
                     style={{ color: "var(--color-muted-foreground)" }}
                   >
                     <Tag size={14} />
@@ -412,14 +404,14 @@ export function BoardView({ board: initialBoard }: BoardViewProps) {
             {canEditBoard && (
               <button
                 onClick={() => setIsTaskModalOpen(true)}
-                className="flex items-center gap-2 py-2 px-4 rounded-xl font-semibold text-sm transition-smooth hover:opacity-90 active:scale-[0.98] cursor-pointer"
+                className="flex items-center justify-center gap-2 py-2.5 px-5 rounded-xl font-bold text-xs uppercase tracking-wider transition-smooth hover:opacity-90 active:scale-[0.98] cursor-pointer shadow-sm w-full md:w-auto"
                 style={{
                   background: "var(--color-foreground)",
                   color: "var(--color-card)",
                 }}
               >
                 <Plus size={14} />
-                Add New Task
+                Add Task
               </button>
             )}
           </div>

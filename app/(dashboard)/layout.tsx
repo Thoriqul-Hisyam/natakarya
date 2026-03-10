@@ -1,6 +1,7 @@
 import { Sidebar } from "@/components/sidebar";
 import { Navbar } from "@/components/navbar";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { BottomNav } from "@/components/bottom-nav";
 
 export default function DashboardLayout({
   children,
@@ -8,15 +9,18 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen" style={{ background: "var(--color-background)" }}>
+    <div className="min-h-screen relative pb-28 lg:pb-0" style={{ background: "var(--color-background)" }}>
       <Sidebar />
-      <div className="ml-[72px]">
+      <div className="lg:pl-[72px]">
         <Navbar />
-        <main className="p-6">
-          <Breadcrumbs />
-          {children}
+        <main className="p-4 md:p-6 lg:p-8">
+          <div className="max-w-7xl mx-auto">
+            <Breadcrumbs />
+            {children}
+          </div>
         </main>
       </div>
+      <BottomNav />
     </div>
   );
 }

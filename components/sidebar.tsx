@@ -20,17 +20,25 @@ const sidebarItems = [
 ];
 
 export function Sidebar() {
+  return (
+    <aside
+      className="fixed left-0 top-0 bottom-0 w-[72px] hidden lg:flex flex-col items-center py-6 gap-1 z-50 transition-smooth"
+      style={{ background: "var(--color-sidebar)" }}
+    >
+      <SidebarContent />
+    </aside>
+  );
+}
+
+export function SidebarContent() {
   const pathname = usePathname();
 
   return (
-    <aside
-      className="fixed left-0 top-0 bottom-0 w-[72px] flex flex-col items-center py-6 gap-1 z-50"
-      style={{ background: "var(--color-sidebar)" }}
-    >
+    <>
       {/* Logo */}
       <Link
         href="/dashboard"
-        className="w-11 h-11 rounded-xl flex items-center justify-center mb-8 transition-smooth hover:scale-110"
+        className="w-11 h-11 rounded-xl flex items-center justify-center mb-8 transition-smooth hover:scale-110 shrink-0"
         style={{ background: "var(--color-primary)" }}
       >
         <svg
@@ -53,7 +61,7 @@ export function Sidebar() {
       <WorkspaceSwitcher />
 
       {/* Navigation Icons */}
-      <nav className="flex flex-col items-center gap-2 flex-1">
+      <nav className="flex flex-col items-center gap-2 flex-1 w-full">
         {sidebarItems.map((item) => {
           const isActive =
             pathname === item.href ||
@@ -73,9 +81,9 @@ export function Sidebar() {
               style={isActive ? { background: "var(--color-primary)" } : {}}
             >
               <Icon size={20} strokeWidth={2} />
-              {/* Tooltip */}
+              {/* Tooltip - only visible on desktop hover */}
               <div 
-                className="absolute left-14 bg-[var(--color-sidebar)] text-white text-[10px] py-1.5 px-3 rounded-lg opacity-0 shadow-lg group-hover:opacity-100 transition-smooth pointer-events-none whitespace-nowrap z-[100] border border-[rgba(255,255,255,0.1)]"
+                className="absolute left-14 bg-[var(--color-sidebar)] text-white text-[10px] py-1.5 px-3 rounded-lg opacity-0 shadow-lg group-hover:lg:opacity-100 transition-smooth pointer-events-none whitespace-nowrap z-[100] border border-[rgba(255,255,255,0.1)] hidden lg:block"
               >
                 {item.label}
               </div>
@@ -87,11 +95,11 @@ export function Sidebar() {
       {/* Settings at bottom */}
       <Link
         href="/dashboard/settings"
-        className="w-11 h-11 rounded-xl flex items-center justify-center text-[var(--color-sidebar-foreground)] opacity-50 hover:opacity-100 hover:bg-[rgba(255,255,255,0.1)] transition-smooth"
+        className="w-11 h-11 rounded-xl flex items-center justify-center text-[var(--color-sidebar-foreground)] opacity-50 hover:opacity-100 hover:bg-[rgba(255,255,255,0.1)] transition-smooth shrink-0"
         title="Settings"
       >
         <Settings size={20} strokeWidth={2} />
       </Link>
-    </aside>
+    </>
   );
 }
