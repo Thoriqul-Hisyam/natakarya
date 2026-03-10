@@ -48,7 +48,7 @@ jobs:
               app:
                 image: ${{ secrets.DOCKER_USERNAME }}/kanban-board:latest
                 ports:
-                  - "3020:3000"
+                  - "3020:3020"
                 restart: always
                 environment:
                   DATABASE_URL: "${{ secrets.DATABASE_URL }}"
