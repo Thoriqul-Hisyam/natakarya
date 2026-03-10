@@ -58,7 +58,7 @@ export function BottomNav() {
                 "relative w-11 h-11 flex items-center justify-center mx-[2px] transition-all duration-300 z-10",
                 isActive ? "text-[var(--color-primary-foreground)]" : "text-[var(--color-muted-foreground)]"
               )}>
-                <Component />
+                <Component variant="mobile" />
               </div>
             );
           }

@@ -23,7 +23,12 @@ import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { CreateWorkspaceDialog } from "./workspace/create-workspace-dialog";
 
-export function WorkspaceSwitcher() {
+interface WorkspaceSwitcherProps {
+    variant?: "sidebar" | "mobile";
+}
+
+export function WorkspaceSwitcher({ variant = "sidebar" }: WorkspaceSwitcherProps) {
+    const isMobile = variant === "mobile";
     const pathname = usePathname();
     const router = useRouter();
     const [workspaces, setWorkspaces] = useState<any[]>([]);
@@ -50,7 +55,7 @@ export function WorkspaceSwitcher() {
     }, [isOpen]);
 
     return (
-        <div className="flex flex-col items-center w-full px-2">
+        <div className={cn("flex flex-col items-center w-full", !isMobile && "px-2")}>
             <Popover open={isOpen} onOpenChange={setIsOpen}>
                 <PopoverTrigger asChild>
                     <button
@@ -58,10 +63,12 @@ export function WorkspaceSwitcher() {
                             "w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 shrink-0",
                             isOpen 
                                 ? "bg-[var(--color-primary)] text-[var(--color-foreground)]" 
-                                : "text-[var(--color-sidebar-foreground)] opacity-50 hover:opacity-100 hover:bg-[rgba(255,255,255,0.1)]"
+                                : isMobile 
+                                    ? "text-[var(--color-muted-foreground)] opacity-50 hover:opacity-100"
+                                    : "text-[var(--color-sidebar-foreground)] opacity-50 hover:opacity-100 hover:bg-[rgba(255,255,255,0.1)]"
                         )}
                     >
-                        <LayoutGrid size={20} strokeWidth={2.5} />
+                        <LayoutGrid size={isMobile ? 19 : 20} strokeWidth={isMobile ? 2 : 2.5} />
                     </button>
                 </PopoverTrigger>
                 <PopoverContent
