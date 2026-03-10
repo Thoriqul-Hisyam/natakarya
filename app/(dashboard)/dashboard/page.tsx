@@ -1,6 +1,7 @@
 import { getWorkspaces } from "@/actions/workspace";
 import { getRecentBoards } from "@/actions/board";
 import { getMyTaskStats, getMyTasks } from "@/actions/task";
+import { auth } from "@/lib/auth";
 import Link from "next/link";
 import { 
   Plus, 
@@ -21,6 +22,7 @@ import { ActivityFeed } from "@/components/dashboard/activity-feed";
 import { cn } from "@/lib/utils";
 
 export default async function DashboardPage() {
+  const session = await auth();
   const workspaces = await getWorkspaces();
   const recentBoards = await getRecentBoards();
   
@@ -38,6 +40,8 @@ export default async function DashboardPage() {
     return "Good evening";
   };
 
+  const userName = session?.user?.name?.split(" ")[0] || "Explorer";
+
   return (
     <div className="py-4 md:py-8">
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-10">
@@ -47,7 +51,7 @@ export default async function DashboardPage() {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10 fade-in">
             <div>
               <h1 className="text-3xl font-extrabold tracking-tight" style={{ color: "var(--color-foreground)" }}>
-                {getGreeting()}, <span className="text-[var(--color-muted-foreground)] opacity-60">Explorer</span>
+                {getGreeting()}, <span className="text-[var(--color-muted-foreground)] opacity-60">{userName}</span>
               </h1>
               <p className="text-sm mt-1.5 font-medium" style={{ color: "var(--color-muted-foreground)" }}>
                 Here&apos;s what&apos;s happening in your workspace today.

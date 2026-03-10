@@ -23,7 +23,6 @@ import {
   Trash2,
   Plus,
   Send,
-  MoreVertical,
   FileIcon,
 } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";

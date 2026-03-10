@@ -351,7 +351,7 @@ export function BoardView({ board: initialBoard }: BoardViewProps) {
         {/* Board toolbar - Visible only for Board and List views */}
         {(activeTab === "Board" || activeTab === "List") && (
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+            <div className="flex flex-wrap items-center gap-2 pb-1">
               <div
                 className="flex items-center gap-2 py-2 px-3 rounded-xl text-sm min-w-[160px]"
                 style={{

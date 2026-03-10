@@ -25,6 +25,10 @@ export const metadata: Metadata = {
     title: "Natakarya",
     description: "Visual Task Management for High-Performing Teams",
   },
+  icons: {
+    icon: "/favicon.svg",
+    apple: "/logo.svg",
+  },
 };
 
 export default function RootLayout({

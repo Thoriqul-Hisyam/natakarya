@@ -103,10 +103,28 @@ export function Navbar() {
         className="h-16 flex items-center justify-between px-4 md:px-6 gap-4 sticky top-0 z-40 transition-smooth"
         style={{ background: "var(--color-background)" }}
       >
-        <div className="flex items-center gap-3">
+        <div className={cn("flex items-center gap-3 transition-all duration-300", isSearchExpanded ? "w-[0px] opacity-0 overflow-hidden" : "w-auto opacity-100")}>
             {/* Title / Logo for Mobile */}
-            <Link href="/dashboard" className="lg:hidden font-black text-lg tracking-tight hover:opacity-80 transition-smooth">
-                Natakarya
+            <Link href="/dashboard" className="lg:hidden flex items-center gap-2 font-black text-lg tracking-tight hover:opacity-80 transition-smooth shrink-0">
+                <div 
+                  className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" 
+                  style={{ background: "var(--color-primary)" }}
+                >
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 100 100"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect x="25" y="25" width="20" height="20" rx="4" fill="#1a2e35" />
+                    <rect x="55" y="25" width="20" height="20" rx="4" fill="#1a2e35" opacity="0.2" />
+                    <rect x="25" y="55" width="20" height="20" rx="4" fill="#1a2e35" opacity="0.2" />
+                    <rect x="55" y="55" width="20" height="20" rx="4" fill="#1a2e35" opacity="0.6" />
+                    <path d="M45 45 L55 55" stroke="#1a2e35" strokeWidth="2" strokeDasharray="4 2" />
+                  </svg>
+                </div>
+                <span style={{ color: "var(--color-foreground)" }}>Natakarya</span>
             </Link>
         </div>
 

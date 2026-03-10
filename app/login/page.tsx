@@ -45,19 +45,17 @@ export default function LoginPage() {
             style={{ background: "var(--color-primary)" }}
           >
             <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
+              width="28"
+              height="28"
+              viewBox="0 0 100 100"
               fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <rect x="3" y="3" width="7" height="9" rx="1" />
-              <rect x="14" y="3" width="7" height="5" rx="1" />
-              <rect x="14" y="12" width="7" height="9" rx="1" />
-              <rect x="3" y="16" width="7" height="5" rx="1" />
+              <rect x="25" y="25" width="20" height="20" rx="4" fill="#1a2e35" />
+              <rect x="55" y="25" width="20" height="20" rx="4" fill="#1a2e35" opacity="0.2" />
+              <rect x="25" y="55" width="20" height="20" rx="4" fill="#1a2e35" opacity="0.2" />
+              <rect x="55" y="55" width="20" height="20" rx="4" fill="#1a2e35" opacity="0.6" />
+              <path d="M45 45 L55 55" stroke="#1a2e35" stroke-width="2" stroke-dasharray="4 2" />
             </svg>
           </div>
           <h1 className="text-2xl font-bold" style={{ color: "var(--color-foreground)" }}>

@@ -55,9 +55,10 @@ export function WorkspaceSwitcher() {
                 <PopoverTrigger asChild>
                     <button
                         className={cn(
-                            "w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-300 text-inherit hover:opacity-100",
-                            !isOpen && "opacity-40 grayscale hover:grayscale-0 hover:opacity-100",
-                            isOpen && "scale-110 z-20"
+                            "w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 shrink-0",
+                            isOpen 
+                                ? "bg-[var(--color-primary)] text-[var(--color-foreground)]" 
+                                : "text-[var(--color-sidebar-foreground)] opacity-50 hover:opacity-100 hover:bg-[rgba(255,255,255,0.1)]"
                         )}
                     >
                         <LayoutGrid size={20} strokeWidth={2.5} />
