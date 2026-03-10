@@ -37,6 +37,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
+          port: 22
           script: |
             cd /www/wwwroot/kanban-board || mkdir -p /www/wwwroot/kanban-board && cd /www/wwwroot/kanban-board
             
