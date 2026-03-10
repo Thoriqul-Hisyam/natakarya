@@ -30,6 +30,9 @@ jobs:
           tags: ${{ secrets.DOCKER_USERNAME }}/kanban-board:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            NEXT_PUBLIC_PUSHER_KEY=${{ secrets.NEXT_PUBLIC_PUSHER_KEY }}
+            NEXT_PUBLIC_PUSHER_CLUSTER=${{ secrets.NEXT_PUBLIC_PUSHER_CLUSTER }}
 
       - name: Deploy via SSH
         uses: appleboy/ssh-action@master
